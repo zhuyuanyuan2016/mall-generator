@@ -1,0 +1,160 @@
+package ${package}.service.impl;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+
+
+import com.mg.live.service.base.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * ${comments}Service
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+@Service("${classname}Service")
+public class ${className}ServiceImpl implements ${className}Service {
+
+    /**
+    *${comments}操作数据库
+    */
+    @Autowired
+    private ${className}Mapper ${classname}Mapper;
+
+    /**
+    * 新增${comments}
+    *
+    * @param input input
+    * @return 新增id
+    */
+    @Override
+    public int insert(Insert${className}Input input){
+        ${className}Entity ${classname}Entity =new ${className}Entity();
+
+        BeanUtils.copyProperties(input,${classname}Entity);
+
+        ${classname}Mapper.insert(${classname}Entity);
+        return ${classname}Entity.getId();
+    }
+
+    /**
+    * 修改${comments}
+    *
+    * @param input input
+    * @return 是否成功
+    */
+    @Override
+    public boolean update(Update${className}Input input)
+    {
+        ${className}Entity ${classname}Entity = ${classname}Mapper.selectById(input.getId());
+        if (${classname}Entity == null) {
+            throw new BusinessException(String.format("未能根据Id:%s找到指定的${comments}。", input.getId()));
+        }
+
+        ${classname}Entity =new ${className}Entity();
+        BeanUtils.copyProperties(input,${className}Entity);
+        return ${classname}Mapper.updateById(${className}Entity)>0;
+    }
+
+    /**
+    * 删除${comments}
+    *
+    * @param id id
+    * @return 是否成功
+    */
+    @Override
+    public boolean delete(int id){
+        return ${classname}Mapper.deleteById(id)>0;
+    }
+
+    /**
+    * 根据Id获取${comments}
+    *
+    * @param id id
+    * @return ${comments}
+    */
+    @Override
+    public ${className}Entity getById(int id){
+        return ${classname}Mapper.selectById(id);
+    }
+
+    /**
+    * 根据批量Id获取${comments}
+    *
+    * @param batchIds 批量ids
+    * @return ${comments}集合
+    */
+    @Override
+    public List<${className}Entity> listByBatchIds(List<Integer> batchIds){
+        if (batchIds==null || batchIds.size()<=0) {
+            return new ArrayList<>();
+        }
+        return ${classname}Mapper.selectBatchIds(batchIds);
+    }
+
+    /**
+    * 分页查询
+    *
+    * @param input input
+    * @return 分页的${comments}
+    */
+    @Override
+    public Page<${className}Entity> pagedQuery(PagedQuery${className}Input input){
+        LambdaQueryWrapper<${className}Entity> queryWrapper = Wrappers.lambdaQuery();
+
+        PageHelper.startPage(input.getPageIndex(), input.getPageSize());
+
+        return (Page<${className}Entity>)${classname}Mapper.selectList(queryWrapper);
+    }
+
+    /**
+    * 将Do对象转换成Domain对象
+    *
+    * @param ${className}Do 实体
+    * @return domain
+    */
+    @Override
+    public ${className} doToDomain(${className}Entity ${classname}Do){
+        if (${classname}Do == null) {
+            return null;
+        }
+
+        ${className} ${classname} =new ${className}();
+        BeanUtils.copyProperties(${classname}Do,${classname});
+        return ${classname};
+    }
+
+    /**
+    * 将Do对象转换成Domain对象
+    *
+    * @param dos dos
+    * @return domains
+    */
+    @Override
+    public List<${className}> doToDomain(List<${className}Entity> dos){
+        List<${className}> result = new ArrayList<>();
+        if (dos == null) {
+            return result;
+        }
+
+        for (${className}Entity ${classname}Do : dos) {
+            ${className} ${classname} = doToDomain(${classname}Do);
+            result.add(${classname});
+        }
+        return result;
+    }
+
+}

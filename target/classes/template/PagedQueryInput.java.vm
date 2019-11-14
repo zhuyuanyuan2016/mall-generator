@@ -1,0 +1,24 @@
+package ${package}.service.bo;
+
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+@Data
+@ToString
+@Valid
+@Accessors(chain = true)
+public class PagedQuery${className}Input  extends PagedAndSortedInput{
+
+
+}
+
+
